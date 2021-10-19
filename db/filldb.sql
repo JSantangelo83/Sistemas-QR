@@ -5,18 +5,18 @@ INSERT INTO cursos (nombre,aclaracion) VALUES ("3AO","Quinto Computadoras");
 
 
 /* Alumnos */
-INSERT INTO alumnos (dni,nombre,apellido,mac_address,nombre_curso) VALUES (44111111,"Joaquin","Santangelo","83:DB:84:C1:CC:F3","4AO");
-INSERT INTO alumnos (dni,nombre,apellido,mac_address,nombre_curso) VALUES (44111112,"Joaquin","Trabucco","70:26:80:D0:E0:4C","4AO");
-INSERT INTO alumnos (dni,nombre,apellido,mac_address,nombre_curso) VALUES (44111113,"Joaquin","Rodil","BC:60:C8:07:D7:80","4AO");
-INSERT INTO alumnos (dni,nombre,apellido,mac_address,nombre_curso) VALUES (44111114,"Theo","Sanchez Pintor","1F:7D:0E:8B:96:76","4AO");
-INSERT INTO alumnos (dni,nombre,apellido,mac_address,nombre_curso) VALUES (44111115,"Federico","Torrado","05:55:90:74:C7:DE","4AO");
+INSERT INTO alumnos (dni,nombre,apellido,session_id,nombre_curso) VALUES (44111111,"Joaquin","Santangelo","528ed4b34e6e66790957c3bdf39877e8","4AO");
+INSERT INTO alumnos (dni,nombre,apellido,session_id,nombre_curso) VALUES (44111112,"Joaquin","Trabucco","77f142ecd0e23e8a7666411e28785410","4AO");
+INSERT INTO alumnos (dni,nombre,apellido,session_id,nombre_curso) VALUES (44111113,"Joaquin","Rodil","0b69d314b0c2b0c17d0de954413f3e5b","4AO");
+INSERT INTO alumnos (dni,nombre,apellido,session_id,nombre_curso) VALUES (44111114,"Theo","Sanchez Pintor","d484da16f12971bfc33ad5a56f6f0056","4AO");
+INSERT INTO alumnos (dni,nombre,apellido,session_id,nombre_curso) VALUES (44111115,"Federico","Torrado","6d6881a36139a14dba7b64cc0ddb5adb","4AO");
 
 
 
 /* Profesores */
-INSERT INTO docentes (dni,nombre,apellido) VALUES (30111111,"Francisco","Demartino");
-INSERT INTO docentes (dni,nombre,apellido) VALUES (30111112,"Nicolas","Mastropascua");
-INSERT INTO docentes (dni,nombre,apellido) VALUES (30111113,"Andres","Visco Bonomo");
+INSERT INTO docentes (dni,nombre,apellido, session_id) VALUES (30111111,"Francisco","Demartino", "61bc48c63b909eb7c9f2f93cd4964dee");
+INSERT INTO docentes (dni,nombre,apellido, session_id) VALUES (30111112,"Nicolas","Mastropascua", "9fbb51d013a3b0bebfc4be304cb57f09");
+INSERT INTO docentes (dni,nombre,apellido, session_id) VALUES (30111113,"Andres","Visco Bonomo", "a56b809f4b564951711a4f188f91f7b1");
 
 
 
