@@ -30,10 +30,11 @@ def login():
             flash(error, 'error')
         else:
             user = dbh.getUser(email)
-            print(user)
             if(user):
-                if(list(user[0])[0] == password):
+                if(user[1] == password):
                     flash("Has iniciado sesion con exito", 'success')
+                    session["token"] = True
+                    return redirect('/')
                 else:
                     error = "Contraseña incorrecta!"
             else:
