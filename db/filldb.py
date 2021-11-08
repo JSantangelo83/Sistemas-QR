@@ -27,14 +27,14 @@ c.execute(''' INSERT INTO docentes (dni,nombre,apellido, session_id) VALUES (301
 c.execute('''INSERT INTO docentes (dni,nombre,apellido, session_id) VALUES (30111113,"Andres","Visco Bonomo", "a56b809f4b564951711a4f188f91f7b1") ''')
 
 # usuarios
-c.execute(''' INSERT INTO usuarios (email, password) VALUES ("jsantangelo@gmail.com","toor")''')
-c.execute(''' INSERT INTO usuarios (email, password) VALUES ("jtrabucco@gmail.com","toor")''')
-c.execute(''' INSERT INTO usuarios (email, password) VALUES ("jrodil@gmail.com","toor")''')
-c.execute(''' INSERT INTO usuarios (email, password) VALUES ("tspintor@gmail.com","toor")''')
-c.execute(''' INSERT INTO usuarios (email, password) VALUES ("ftorrado@gmail.com","toor")''')
-c.execute(''' INSERT INTO usuarios (email, password) VALUES ("fdemartino@gmail.com","toor")''')
-c.execute(''' INSERT INTO usuarios (email, password) VALUES ("nmastropascua@gmail.com","toor")''')
-c.execute(''' INSERT INTO usuarios (email, password) VALUES ("avbonomo@gmail.com","toor")''')
+c.execute(''' INSERT INTO usuarios (email, password, admin) VALUES ("jsantangelo@gmail.com","toor","FALSE")''')
+c.execute(''' INSERT INTO usuarios (email, password, admin) VALUES ("jtrabucco@gmail.com","toor", "FALSE")''')
+c.execute(''' INSERT INTO usuarios (email, password, admin) VALUES ("jrodil@gmail.com","toor", "FALSE")''')
+c.execute(''' INSERT INTO usuarios (email, password, admin) VALUES ("tspintor@gmail.com","toor", "FALSE")''')
+c.execute(''' INSERT INTO usuarios (email, password, admin) VALUES ("ftorrado@gmail.com","toor", "FALSE")''')
+c.execute(''' INSERT INTO usuarios (email, password, admin) VALUES ("fdemartino@gmail.com","toor", "TRUE")''')
+c.execute(''' INSERT INTO usuarios (email, password, admin) VALUES ("nmastropascua@gmail.com","toor", "TRUE")''')
+c.execute(''' INSERT INTO usuarios (email, password, admin) VALUES ("avbonomo@gmail.com","toor", "TRUE")''')
 
 
 
