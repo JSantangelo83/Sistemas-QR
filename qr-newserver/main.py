@@ -50,7 +50,8 @@ def login():
 # /login    		[get,post]  -> permite el login de profesores (privilegios) y alumnos (usuarios comunes)
 
 # requieren session (alumno o profesor):
-# /         		[get]       -> principal page
+# /         		[get]       -> principal page (useless!)
+# /logout		[get]	    -> remueve session y redirect a /login
 
 # requieren session y privilegios (profesor):
 # /entity   		[get, post] -> GET: devuelve user si hay id valido
