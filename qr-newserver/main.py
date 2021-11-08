@@ -46,24 +46,19 @@ def login():
 
         return redirect(url_for('login'))
 
-# endpoints
-# /login    [get,post]  -> permite el login de admins y users
-# /         [get]       -> 
+# ------------------------------ ENDPOINTS ------------------------------
+# /login    		[get,post]  -> permite el login de profesores (privilegios) y alumnos (usuarios comunes)
 
-# /entity   [post]      ->  
-# /entity   [post]      ->  
+# requieren session (alumno o profesor):
+# /         		[get]       -> principal page
 
-# todas las rutas admin piden token
-# adminlogin -- se loguea el profesor
-
-# adminuser 
-# postentidad-- if(id)modifica usuario else creas usuarios
-# getid-- devuelve user
-# deleteid-- deletea user
-
-# adminclase
-# post -- if(token) if(id) modifica clase else link else error
-# get -- if(id) clase else clases
+# requieren session y privilegios (profesor):
+# /entity   		[get, post] -> GET: devuelve user si hay id valido
+# 			  	       POST: si es id valido, lo modifica; else crea usuario
+# /entity/delete	[post] ->      si es id valido, borra cuenta
+# /class    		[get, post] -> GET: devuelve clases si no recibe id_clase, else clase
+#			 	       POST: modifica clase 
+# -----------------------------------------------------------------------
 
 if __name__ == "__main__":
     app.run(debug=True)
