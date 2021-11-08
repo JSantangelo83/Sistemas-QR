@@ -14,9 +14,9 @@ def before_anything():
 def main():
     return render_template("index.html")
     
-@auth.route('/<page>')
-def secondary(page):
-    try:
-        return render_template(f'index.html')
-    except TemplateNotFound:
-        abort(404)
+# @auth.route('/<page>')
+# def secondary(page):
+#     try:
+#         return render_template(f'index.html')
+#     except TemplateNotFound:
+#         abort(404)

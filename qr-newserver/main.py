@@ -18,6 +18,9 @@ app.register_blueprint(auth)
 def login():
     error = ""
 
+    if 'useremail' in session:
+        return redirect(url_for('auth.main'))
+    
     if request.method == 'GET':
         return render_template("login.html")
 
