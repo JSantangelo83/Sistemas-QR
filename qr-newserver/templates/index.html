@@ -39,6 +39,15 @@
             </div>
         </nav> -->
     </header>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert text-center {{'alert-danger' if category == 'error'}} {{'alert-success' if category == 'success'}}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    {% endif %}
+	{% endwith %}
     <!-- Cuerpo de la pagina -->
     <div class="container">
         <div class="row">
