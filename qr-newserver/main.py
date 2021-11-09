@@ -38,6 +38,7 @@ def login():
                 if user[1] == password:
                     flash("Has iniciado sesion con exito!", 'success')
                     session["useremail"] = user[0]
+                    session["admin"] = user[2] 
                     return redirect(url_for('auth.main'))
                 else: error = "Contraseña incorrecta" # esto leakea
             else:

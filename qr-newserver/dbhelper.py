@@ -15,4 +15,3 @@ def getUser(email):
         return (rows[0])
     return False
 
-getUser("jrodil@gmail.com")
