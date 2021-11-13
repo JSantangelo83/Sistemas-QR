@@ -26,4 +26,4 @@ def does_user_exist(id):
 # insert("usuarios", ["hola@jaja.com", "chau"])
 # print(does_user_exist(30111111))
     
-get_user("jrodil@gmail.com")
+#get_user("jrodil@gmail.com")
