@@ -7,8 +7,7 @@ auth = Blueprint('auth', __name__,
 @auth.before_request
 def before_anything():
     if not 'useremail' in session:
-        return redirect(url_for('login'))
-    
+        return redirect(url_for('login'))    
 
 @auth.route('/')
 def main():
@@ -25,17 +24,3 @@ def logout():
 
     return f"<html><body><p>Vas a ser redigirido al login en { int(seconds) } segundos...</p><script>var timer = setTimeout(function() {{window.location='{ redirect_url }'}}, { wait_time });</script></body></html>"
 
-@auth.route('/entity', strict_slashes=False)
-def entity():
-    return "chau"
-
-@auth.route('/entity/<page>', strict_slashes=False)
-def entity_mod(page):
-    return "chau_mod"
-
-# @auth.route('/<page>')
-# def secondary(page):
-#     try:
-#         return render_template(f'index.html')
-#     except TemplateNotFound:
-#         abort(404)
