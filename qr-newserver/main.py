@@ -2,17 +2,12 @@ from flask import Flask, render_template, request, make_response, session, flash
 import os
 import dbhelper as dbh
 from auth import auth
+from admin import admin
 
 app = Flask(__name__, template_folder="templates")
 app.secret_key = os.urandom(12).hex()
 app.register_blueprint(auth)
-
-# @app.route("/")
-# def main():    
-#     if(session.get("token")):
-#         return render_template("index.html")
-#     else:
-#         return redirect('/login')
+app.register_blueprint(admin)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -33,7 +28,7 @@ def login():
             error = "Por favor, comproba que el campo 'email' y/o el campo 'password' no se encuentren vacios"
             flash(error, 'error')
         else:
-            user = list(dbh.getUser(email))
+            user = list(dbh.get_user(email))
             if user:
                 if user[1] == password:
                     flash("Has iniciado sesion con exito!", 'success')

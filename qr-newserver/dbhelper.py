@@ -20,10 +20,12 @@ def insert(table_name, values):
 
 def does_user_exist(id):
     result = c.execute('SELECT dni FROM docentes WHERE dni = ?',(id,)).fetchall()
-    if not len(result): return False
-    return True
+    return len(result) > 0
+
+def is_admin(email):
+    return c.execute('SELECT admin FROM usuarios WHERE email = ?',(email,)).fetchall()[0][0] == "TRUE"
     
 # insert("usuarios", ["hola@jaja.com", "chau"])
 # print(does_user_exist(30111111))
-    
-#get_user("jrodil@gmail.com")
+# get_user("jrodil@gmail.com")
+# print(is_admin('fdemartino@gmail.com'))
