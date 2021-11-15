@@ -19,28 +19,27 @@ def login():
     if request.method == 'GET':
         return render_template("login.html")
 
-    if request.method == 'POST':
-        print("RECIBI POST")
-        email, password = request.form['email'].strip(), request.form['password'].strip()
-        #print(f"email {email} password {password}")
+    print("RECIBI POST")
+    email, password = request.form['email'].strip(), request.form['password'].strip()
+    #print(f"email {email} password {password}")
 
-        if not (email and password):
-            error = "Por favor, comproba que el campo 'email' y/o el campo 'password' no se encuentren vacios"
-            flash(error, 'error')
+    if not (email and password):
+        error = "Por favor, comproba que el campo 'email' y/o el campo 'password' no se encuentren vacios"
+        flash(error, 'error')
+    else:
+        user = list(dbh.get_user(email))
+        if user:
+            if user[1] == password:
+                flash("Has iniciado sesion con exito!", 'success')
+                session["useremail"] = user[0]
+                session["admin"] = user[2] 
+                return redirect(url_for('auth.main'))
+            else: error = "Contraseña incorrecta" # esto leakea
         else:
-            user = list(dbh.get_user(email))
-            if user:
-                if user[1] == password:
-                    flash("Has iniciado sesion con exito!", 'success')
-                    session["useremail"] = user[0]
-                    session["admin"] = user[2] 
-                    return redirect(url_for('auth.main'))
-                else: error = "Contraseña incorrecta" # esto leakea
-            else:
-                error = "No se ha encontrado ninguna cuenta asociada a las credenciales ingresadas"
-                flash(error, 'error')
+            error = "No se ha encontrado ninguna cuenta asociada a las credenciales ingresadas"
+            flash(error, 'error')
 
-        return redirect(url_for('login'))
+    return redirect(url_for('login'))
 
 # ------------------------------ ENDPOINTS ------------------------------
 # /login    		[get,post]  -> permite el login de profesores (privilegios) y alumnos (usuarios comunes)

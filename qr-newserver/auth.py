@@ -11,7 +11,7 @@ def before_anything():
 
 @auth.route('/')
 def main():
-    return render_template("index.html")
+    return render_template("index.html", email=session['useremail'])
 
 @auth.route('/logout')
 def logout():

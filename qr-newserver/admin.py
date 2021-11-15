@@ -12,10 +12,16 @@ def before_anything():
     if not dbh.is_admin(session['useremail']):
         return redirect(url_for('login'))    
 
-@admin.route('/entity', strict_slashes=False)
+@admin.route('/entity', strict_slashes=False, methods=["GET", "POST"])
 def entity():
+    if request.method == "GET":
+        gid = request.args.get('id')
+        return "GET DONE"
+    
+    # POST
+    
     return "chau"
 
-@admin.route('/entity/<page>', strict_slashes=False)
+@admin.route('/entity/<page>', strict_slashes=False, methods=["GET", "POST"])
 def entity_mod(page):
     return "chau_mod"
