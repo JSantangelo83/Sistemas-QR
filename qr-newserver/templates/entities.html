@@ -1,24 +1,51 @@
 {% extends "base.html" %}
 {% block body %}
 <h1 class="text-center mt-3">{{title}}</h1>
+<div class="modal fade" id="modalEdit" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Modal body text goes here.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalDelete" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Eliminar</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Estas seguro de borrar el elemento seleccionado?</p><p>La accion no puede revertirse.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="container">
   <div class="row">
     <div class="col">
-      <div id="table" class="mt-5"></div>
+      <div id="table" class=" mt-5">
+
+      </div>
     </div>
   </div>
   <div class="row">
-    <div class="col-6"></div>
-    <div class="col-2">
-      <button class="btn btn-info w-100">Agregar</button>
-    </div>
-    <div class="col-2">
-      <button class="btn btn-warning w-100">Modificar</button>
-    </div>
-    <div class="col-2">
-      <button class="btn btn-danger w-100">Eliminar</button>
-    </div>
-
   </div>
 </div>
 
