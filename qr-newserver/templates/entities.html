@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block body %}
+<h1 class="text-center mt-3">{{title}}</h1>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div id="table" class="mt-5"></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6"></div>
+    <div class="col-2">
+      <button class="btn btn-info w-100">Agregar</button>
+    </div>
+    <div class="col-2">
+      <button class="btn btn-warning w-100">Modificar</button>
+    </div>
+    <div class="col-2">
+      <button class="btn btn-danger w-100">Eliminar</button>
+    </div>
+
+  </div>
+</div>
+
+<script src="{{name}}.js"></script>
+{% endblock %}

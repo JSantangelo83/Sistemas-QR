@@ -31,13 +31,14 @@ def login():
         error = "Por favor, comproba que el campo 'email' y/o el campo 'password' no se encuentren vacios"
         flash(error, 'error')
     else:
-        user = dbh.get_user(email)
+        user = dbh.get_user_full(email)
+        print(user)
         if user:
             if user[1] == password:
                 flash("Has iniciado sesion con exito!", 'success')
                 session.permanent = True
                 session["useremail"] = user[0]
-                session["admin"] = user[2] 
+                session["admin"] = user[1] 
                 return redirect(url_for('auth.main'))
             else: error = "Contraseña incorrecta" # esto leakea
         else:
