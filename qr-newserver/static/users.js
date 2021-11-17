@@ -39,7 +39,6 @@ let deleteSelected = function()
 	deleteRecord(content);
     });
     $("#modalDelete").modal('toggle');
-    
 }
 
 let updateFetch = function ()
@@ -49,13 +48,13 @@ let updateFetch = function ()
 	data = temp;
 	//console.log(data);
 	fields = Object.keys(data[0]);
-	
+	let cont = 0;
 	//set header of table
 	let table = `
 <div class='row bg-primary text-white' style="padding: 10px;">
 <div class='col-sm-4'><h3>Gestion de <b>Usuarios</b></h3></div>
 <div class='col-sm-8 text-end'>
-<button class='btn btn-success' style="border-radius:4px;" data-bs-toggle='modal' data-bs-target="#modalCreate">
+<button class='btn btn-success' style="border-radius:4px;" onclick="openModalCreate()">
 <i class='material-icons' style="vertical-align:middle;">add_circle</i>
 <span style="vertical-align:middle;">Agregar</span>
 </button>
@@ -83,6 +82,8 @@ let updateFetch = function ()
 	//create//append rows
 	for(i = 0; i < data.length; i++){
 	    let row = data[i];
+	    if(row[pk] == null) continue;
+	    cont++;
 	    table += 
 		`<tr>`;
 	    values = Object.values(row);
@@ -108,7 +109,7 @@ let updateFetch = function ()
 	table +=
 	    `</tbody>
   </table>
-<div class="text-hint">Mostrando <b>${data.length}</b> de <b>${data.length}</b> resultados</div>
+<div class="text-hint">Mostrando <b>${cont}</b> de <b>${cont}</b> resultados</div>
 </div>
 `
 	;
@@ -145,6 +146,23 @@ let editRecord = function(content)
     });   
 }
 
+let createRecord = function(content)
+{
+    fetch("/user", {
+	method: "POST",
+	headers: {'Content-Type': 'application/json'},
+	body: JSON.stringify(content)
+    }).then(res => {
+	res.json().then(res => {
+	    console.log("Request complete! response:", res);
+	    if(res["success"] === 1){
+		updateFetch(); $("#modalCreate").modal('toggle');}
+	    
+	});
+    });       
+}
+    
+
 let deleteRecord = function(content)
 {
     fetch("/user/delete", {
@@ -164,7 +182,8 @@ let deleteRecord = function(content)
 let openModalEdit = function(id)
 {
     fields.forEach(field => {
-	$(`#${field}`).val(data[id][`${field}`]);
+	$(`[id='${field}']`).val(data[id][`${field}`]);
+	//$(`#${field}`).val(data[id][`${field}`]);
     });
 
     $("#btnConfirmEdit").unbind('click');
@@ -179,6 +198,23 @@ let openModalEdit = function(id)
     });
 
     $("#modalEdit").modal('toggle');
+}
+
+let openModalCreate = function()
+{
+    $("#btnConfirmCreate").unbind('click');
+    $("#btnConfirmCreate").on('click', () => {
+	content = {};
+	fields.forEach(field => {
+	    content[field] = $(`#create${field}`).val();
+	});
+	content["pk"] = content[pk];
+	content["create"] = 1;
+	console.log(content);
+	createRecord(content);
+    });
+
+    $("#modalCreate").modal('toggle');
 }
 
 let openModalDelete = function(id)
@@ -218,7 +254,7 @@ let updateModalCreate = function()
 	{
 	    content += `
 <label for="${field}">${field}</label>
-<input type="text" class="form-control" id="${field}" placeholder="">
+<input type="text" class="form-control" id="create${field}" placeholder="">
 		`;
 	});
     content += "</form>";

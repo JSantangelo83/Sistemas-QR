@@ -25,7 +25,7 @@ def classes():
 
 @admin.route('/professors', strict_slashes=False, methods=["GET"])
 def professors():
-    return render_template("entities.html", email=session['useremail'], admin=True, title="Profesores", name="professors")
+    return render_template("entities.html", email=session['useremail'], admin=True, title="Docentes", name="professors")
 
 @admin.route('/students', strict_slashes=False, methods=["GET"])
 def students():
@@ -45,16 +45,41 @@ def user():
             users = dbh.get_users()
             return jsonify(users)
         return jsonify(result)
-    
-    # POST
 
+    # POST
+    success = 0
     try:
         request.json["Admin"] = bool(int(request.json["Admin"]))
-        dbh.update_user(request.json)
+        success = 1
     except:
-        return jsonify({"success": 0})
+        return jsonify({"success": 0})        
+
+    if dbh.user_exists(request.json["pk"]):
+        print("ya existe")
+        if "create" in request.json:
+            if request.json["create"]: return jsonify({"success": 0})
+            del request.json["create"]
+
+        try:
+            dbh.update_user(request.json)
+            success &= 1
+        except Exception as e:
+            print(e)
+            success &= 0
+
+        return jsonify({"success": success})
+
+    print("nuevo")
+    if not "create" in request.json: return jsonify({"success": 0})
+    if request.json["create"] != 1: return jsonify({"success": 0})
+    del request.json["create"]
     
-    return jsonify({"success": 1})
+    try:
+        dbh.insert_full("usuarios", request.json)
+        success = 1
+    except: success &= 0
+        
+    return jsonify({"success": success})
 
 @admin.route('/class', strict_slashes=False, methods=["GET", "POST"])
 def c_class():
@@ -66,8 +91,40 @@ def c_class():
             return jsonify(users)
         return jsonify(result)
     
-    # POST    
-    return "chau"
+    # POST
+    success = 0
+    try:
+        request.json["Id"] = int(request.json["Id"])
+        request.json["pk"] = int(request.json["pk"])
+        success = 1
+    except:
+        print("fallo al parsear")
+        return jsonify({"success": success})
+
+    if dbh.class_exists(request.json["pk"]):
+        if "create" in request.json:
+            if request.json["create"]: return jsonify({"success": 0})
+            del request.json["create"]
+        
+        try:
+            dbh.update_class(request.json)
+            success &= 1
+        except: success &= 0
+        
+        return jsonify({"success": success})
+
+    if not "create" in request.json: return jsonify({"success": 0})
+    if request.json["create"] != 1: return jsonify({"success": 0})
+    del request.json["create"]
+    
+    try:
+        dbh.insert_full("modulos", request.json)
+        success = 1
+    except Exception as e:
+        print(e)
+        success &= 0
+        
+    return jsonify({"success": success})
 
 @admin.route('/professor', strict_slashes=False, methods=["GET", "POST"])
 def professor():
@@ -79,8 +136,41 @@ def professor():
             return jsonify(users)
         return jsonify(result)
     
-    # POST    
-    return "chau"
+    # POST
+    success = 0
+    try:
+        request.json["Dni"] = int(request.json["Dni"])
+        request.json["pk"] = int(request.json["pk"])
+        success = 1
+    except:
+        return jsonify({"success": 0})        
+
+    if dbh.professor_exists(request.json["pk"]):
+        print("ya existe")
+        if "create" in request.json:
+            if request.json["create"]: return jsonify({"success": 0})
+            del request.json["create"]
+
+        try:
+            dbh.update_professor(request.json)
+            success &= 1
+        except Exception as e:
+            print(e)
+            success &= 0
+
+        return jsonify({"success": success})
+
+    print("nuevo")
+    if not "create" in request.json: return jsonify({"success": 0})
+    if request.json["create"] != 1: return jsonify({"success": 0})
+    del request.json["create"]
+    
+    try:
+        dbh.insert_full("docentes", request.json)
+        success = 1
+    except: success &= 0
+        
+    return jsonify({"success": success})
 
 @admin.route('/user/delete', strict_slashes=False, methods=["POST"])
 def user_delete():
@@ -89,6 +179,39 @@ def user_delete():
     success = 0
     try:
         dbh.delete_user(pk)
+        success = 1
+    except: pass
+    return {"success": success}
+
+@admin.route('/class/delete', strict_slashes=False, methods=["POST"])
+def class_delete():
+    pk = request.json["pk"]
+    if not isinstance(pk, list): pk = [pk]
+    success = 0
+    try:
+        dbh.delete_class(pk)
+        success = 1
+    except: pass
+    return {"success": success}
+
+@admin.route('/student/delete', strict_slashes=False, methods=["POST"])
+def student_delete():
+    pk = request.json["pk"]
+    if not isinstance(pk, list): pk = [pk]
+    success = 0
+    try:
+        dbh.delete_student(pk)
+        success = 1
+    except: pass
+    return {"success": success}
+
+@admin.route('/professor/delete', strict_slashes=False, methods=["POST"])
+def professor_delete():
+    pk = request.json["pk"]
+    if not isinstance(pk, list): pk = [pk]
+    success = 0
+    try:
+        dbh.delete_professor(pk)
         success = 1
     except: pass
     return {"success": success}
@@ -104,4 +227,37 @@ def student():
         return jsonify(result)
     
     # POST    
-    return "chau"
+    success = 0
+    try:
+        request.json["Dni"] = int(request.json["Dni"])
+        request.json["pk"] = int(request.json["pk"])
+        success = 1
+    except:
+        return jsonify({"success": 0})        
+
+    if dbh.student_exists(request.json["pk"]):
+        print("ya existe")
+        if "create" in request.json:
+            if request.json["create"]: return jsonify({"success": 0})
+            del request.json["create"]
+
+        try:
+            dbh.update_student(request.json)
+            success &= 1
+        except Exception as e:
+            print(e)
+            success &= 0
+
+        return jsonify({"success": success})
+
+    print("nuevo")
+    if not "create" in request.json: return jsonify({"success": 0})
+    if request.json["create"] != 1: return jsonify({"success": 0})
+    del request.json["create"]
+    
+    try:
+        dbh.insert_full("alumnos", request.json)
+        success = 1
+    except: success &= 0
+        
+    return jsonify({"success": success})
