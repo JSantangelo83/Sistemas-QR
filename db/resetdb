@@ -1,0 +1,2 @@
+#! /bin/bash
+rm database; touch database; python3 create_db.py; python3 filldb.py

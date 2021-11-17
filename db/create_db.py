@@ -33,7 +33,7 @@ c.execute('''CREATE TABLE IF NOT EXISTS docentes (
 c.execute('''CREATE TABLE IF NOT EXISTS usuarios (
     email VARCHAR(45) PRIMARY KEY NOT NULL,
     password VARCHAR(45) NOT NULL,
-    admin BOOLEAN NOT NULL
+    admin INT NOT NULL
 )
 ''')
 
