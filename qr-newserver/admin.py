@@ -9,10 +9,11 @@ admin = Blueprint('admin', __name__,
 
 @admin.before_request
 def before_anything():
-    if not 'useremail' in session:
-        return redirect(url_for('login'))
-    if not dbh.is_admin(session['useremail']):
-        return redirect(url_for('login'))    
+    if request.endpoint != "admin.pk":
+        if not 'useremail' in session:
+            return redirect(url_for('login'))
+        if not dbh.is_admin(session['useremail']):
+            return redirect(url_for('login'))    
 
 @admin.route('/users', strict_slashes=False, methods=["GET"])
 def users():
@@ -30,6 +31,11 @@ def professors():
 def students():
     return render_template("entities.html", email=session['useremail'], admin=True, title="Estudiantes", name="students")
 
+@admin.route('/pk', strict_slashes=False, methods=["GET"])
+def pk():
+    name = request.args.get('name')
+    return {"pk": dbh.get_primary_key_field(name)}
+
 @admin.route('/user', strict_slashes=False, methods=["GET", "POST"])
 def user():
     if request.method == "GET":
@@ -40,8 +46,15 @@ def user():
             return jsonify(users)
         return jsonify(result)
     
-    # POST    
-    return "chau"
+    # POST
+
+    try:
+        request.json["Admin"] = bool(int(request.json["Admin"]))
+        dbh.update_user(request.json)
+    except:
+        return jsonify({"success": 0})
+    
+    return jsonify({"success": 1})
 
 @admin.route('/class', strict_slashes=False, methods=["GET", "POST"])
 def c_class():
@@ -68,6 +81,17 @@ def professor():
     
     # POST    
     return "chau"
+
+@admin.route('/user/delete', strict_slashes=False, methods=["POST"])
+def user_delete():
+    pk = request.json["pk"]
+    if not isinstance(pk, list): pk = [pk]
+    success = 0
+    try:
+        dbh.delete_user(pk)
+        success = 1
+    except: pass
+    return {"success": success}
 
 @admin.route('/student', strict_slashes=False, methods=["GET", "POST"])
 def student():
